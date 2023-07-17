@@ -14,12 +14,16 @@ class SentEmailController extends Controller
             'subject' => $request['subject'],
             'message' => $request['message'],
         ]);
+        
+        $split = explode(',', $request['emails-list']);
 
-        Email::create([
-            'email' => $request['emails-list'],
-            'sentEmail_id' => $sentEmail->id
-        ]);
-
+        for($i=0; $i<sizeof($split); $i++)
+        {
+            Email::create([
+                'email' => $split[$i],
+                'sentEmail_id' => $sentEmail->id
+            ]);
+        }
         return redirect('/dashboard');
     }
 }
