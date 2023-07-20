@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 Route::post('/sent-email', 'App\Http\Controllers\SentEmailController@store');
 
 Route::middleware('auth')->group(function () {

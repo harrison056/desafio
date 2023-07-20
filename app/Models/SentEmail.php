@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SentEmail extends Model
 {
     use HasFactory;
-    protected $fillable = ['subject', 'message'];
+    protected $fillable = ['subject', 'message', 'emails'];
 
 }

@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 use App\Models\SentEmail;
+use App\Mail\newSentEmail;
 use App\Models\Email;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SentEmailController extends Controller
 {
 
     public function store(Request $request) 
     {
-        $sentEmail = SentEmail::create([
+        $user = Auth::user()->id;
+        $splitEmails = explode(',', $request['emails-list']);
+        
+        $mail = new newSentEmail([
             'subject' => $request['subject'],
             'message' => $request['message'],
+            'emails' => $splitEmails
         ]);
-        
-        $split = explode(',', $request['emails-list']);
 
-        for($i=0; $i<sizeof($split); $i++)
-        {
-            Email::create([
-                'email' => $split[$i],
-                'sentEmail_id' => $sentEmail->id
-            ]);
-        }
-        return redirect('/dashboard');
+        $data = array($mail);
+        
+        \App\Jobs\SentEmail::dispatch($mail);
+        return view('mails.mail');
     }
 }
