@@ -23,6 +23,6 @@ class SentEmailController extends Controller
         $data = array($mail);
         
         \App\Jobs\SentEmail::dispatch($mail,$splitEmails);
-        return view('mails.mail');
+        return view('dashboard');
     }
 }

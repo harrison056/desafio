@@ -1,1 +1,1 @@
-foi
+{{ $data['message'] }}

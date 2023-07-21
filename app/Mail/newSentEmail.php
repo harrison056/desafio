@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class newSentEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    private $data;
+    public $data;
     /**
      * Create a new message instance.
      *
