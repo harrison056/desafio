@@ -14,14 +14,17 @@ class SentEmail implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $data;
+    private $emails;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $emails)
     {
         $this->data = $data;
+        $this->emails = $emails;
     }
 
     /**
@@ -31,6 +34,9 @@ class SentEmail implements ShouldQueue
      */
     public function handle()
     {
-        \Illuminate\Support\Facades\Mail::send($data);
+        //\Illuminate\Support\Facades\Mail::send($data)->to();
+        foreach ($this->emails as $e) {
+            \Illuminate\Support\Facades\Mail::to($e)->send($this->data);
+        }
     }
 }

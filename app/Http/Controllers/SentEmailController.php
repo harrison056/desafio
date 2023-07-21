@@ -17,13 +17,12 @@ class SentEmailController extends Controller
         
         $mail = new newSentEmail([
             'subject' => $request['subject'],
-            'message' => $request['message'],
-            'emails' => $splitEmails
+            'message' => $request['message']
         ]);
 
         $data = array($mail);
         
-        \App\Jobs\SentEmail::dispatch($mail);
+        \App\Jobs\SentEmail::dispatch($mail,$splitEmails);
         return view('mails.mail');
     }
 }
